@@ -41,10 +41,9 @@ This template builds from this repository. When `main` changes (for example a ne
 
 ## Files
 
-- `OVERVIEW.md`: the Railway marketplace overview.
-
 - `Dockerfile`: the pinned PHP image, the selfoss release zip and GD.
 - `start.sh`: prepares the volume, hashes the password, sizes Apache/PHP, runs Apache and the feed updater, and exits non-zero if Apache stops so Railway restarts it.
 - `apache-selfoss.conf`: Apache virtual host on `PORT`, HTTPS detection behind Railway's proxy, and deny rules for the data folder.
+- `OVERVIEW.md`: the Railway marketplace overview.
 
 selfoss is © its authors, licensed under GPL-3.0. This wrapper is maintained by Heron Technology.

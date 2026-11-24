@@ -117,6 +117,8 @@ runuser -u www-data -- env "PATH=$PATH" php -d "memory_limit=${cli_mem}M" -r '
   $dice->create("daos\\" . $configuration->dbType . "\\Database");
   echo "[selfoss-start] database ready\n";' || die "database initialisation failed"
 
+SF_VERSION="$(php -r 'require "/var/www/html/src/constants.php"; echo SELFOSS_VERSION;')"
+
 # --- Run Apache and the feed updater -----------------------------------------
 INTERVAL_MIN="${SELFOSS_UPDATE_INTERVAL_MINUTES:-30}"
 case "$INTERVAL_MIN" in ''|*[!0-9]*) die "SELFOSS_UPDATE_INTERVAL_MINUTES must be a whole number of minutes";; esac
@@ -152,7 +154,7 @@ apache2-foreground &
 apache_pid=$!
 updater &
 updater_pid=$!
-log "selfoss 2.19 listening on port ${PORT}; feeds update every ${INTERVAL_MIN} min"
+log "selfoss ${SF_VERSION} listening on port ${PORT}; feeds update every ${INTERVAL_MIN} min"
 
 # Poll (BusyBox-style wait -n is unreliable); exit 1 if Apache dies unexpectedly.
 while true; do
