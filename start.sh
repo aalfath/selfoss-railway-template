@@ -114,7 +114,7 @@ apache2ctl -t >/dev/null 2>&1 || { apache2ctl -t; die "Apache configuration test
 cd "$APP"
 runuser -u www-data -- env "PATH=$PATH" php -d "memory_limit=${cli_mem}M" -r '
   chdir("/var/www/html"); require "src/common.php";
-  $dice->create(daos\DatabaseInterface::class);
+  $dice->create("daos\\" . $configuration->dbType . "\\Database");
   echo "[selfoss-start] database ready\n";' || die "database initialisation failed"
 
 # --- Run Apache and the feed updater -----------------------------------------
